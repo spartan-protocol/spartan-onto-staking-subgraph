@@ -1,0 +1,29 @@
+specVersion: 0.0.2
+description: DAO for SPARTA <> ONTO Campaign
+repository: https://github.com/spartan-protocol/spartan-onto-staking-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Dao
+    network: bsc
+    source:
+      address: "0x80531284f27d8b479aCA8dbA18fD6303B4bF1567"
+      abi: Dao
+      startBlock: 15244180
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mapping.ts
+      entities:
+        - Member
+        - DepositAsset
+      abis:
+        - name: Dao
+          file: ./abis/Dao.json
+      eventHandlers:
+        - event: MemberDeposits(indexed address,indexed address,uint256)
+          handler: handleDeposit
+        - event: MemberWithdraws(indexed address,indexed address,uint256)
+          handler: handleWithdraw

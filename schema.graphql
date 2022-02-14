@@ -1,0 +1,19 @@
+type Member @entity {
+  id: ID!
+  deposits: [Deposit!]! @derivedFrom(field: "member")
+  withdrawals: [Withdrawal!]! @derivedFrom(field: "member")
+}
+
+type Deposit @entity {
+  id: ID!
+  member: Member!
+  timestamp: BigInt! # timestamp of transaction
+  units: BigDecimal!
+}
+
+type Withdrawal @entity {
+  id: ID!
+  member: Member!
+  timestamp: BigInt! # timestamp of transaction
+  units: BigDecimal!
+}
